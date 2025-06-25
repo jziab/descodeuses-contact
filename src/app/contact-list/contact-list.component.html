@@ -1,0 +1,60 @@
+<div class="flex flex-col justify-between h-full">
+  <div class="flex justify-center bg-amber-300 rounded-b-full">
+    <h2>Listes de mes Contacts</h2>
+  </div>
+
+  <div class="flex flex-row justify-center gap-2 m-2">
+    <div>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Recherche..."
+          [(ngModel)]="textRecherche"
+          (input)="onSearch()"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-mini-fab class="mt-2 rounded-full" (click)="onAdd()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="flex justify-center">
+    <mat-list>
+      @for (item of listeContactFiltre; track $index) {
+      <mat-list-item>
+        <mat-icon>person</mat-icon>
+       
+        <span [routerLink]="['/contact-detail', item.id]">
+          {{ item.prenom }}
+          <strong>{{ item.nom }}</strong>
+        </span>
+       
+        <button mat-button [matMenuTriggerFor]="menu"><mat-icon>more_horiz</mat-icon></button>
+        <mat-menu #menu="matMenu">
+
+          
+          <button mat-menu-item (click)="onDelete(item.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-menu-item (click)="sendMail()">
+            <mat-icon >mail</mat-icon>
+          </button>
+         
+
+        </mat-menu>
+
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      }
+    </mat-list>
+  </div>
+  <div
+    class="flex justify-center bg-amber-300 mx-20 p-6 border-4 rounded-t-full"
+  >
+    <p>Nombre de Contact: {{ countContacts }}</p>
+  </div>
+</div>
